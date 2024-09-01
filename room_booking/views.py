@@ -11,14 +11,15 @@ from rest_framework.views import APIView
 from room_booking import mixins, models, serializers, utils
 
 
-POLL_RESPONSE_MANUAL_PARAMETERS = [
-    Parameter('f[start_date]', IN_QUERY, 'Filter by date', type=FORMAT_DATETIME),
-    Parameter('f[end_date]', IN_QUERY, 'Filter by date', type=FORMAT_DATETIME),]
+ROOM_MANUAL_PARAMETERS = [
+    Parameter('start_date', IN_QUERY, 'Filter by date', type=FORMAT_DATETIME),
+    Parameter('end_date', IN_QUERY, 'Filter by date', type=FORMAT_DATETIME)]
 
 
 class RoomSchedule(mixins.AuthenticationMixin, APIView):
     """ REST API Расписание бронирования комнаты """
 
+    @swagger_auto_schema(manual_parameters=ROOM_MANUAL_PARAMETERS)
     def get(self, request, room_name):
         room = get_object_or_404(models.Room, name=room_name)
         # По дефолту будет фильтровать бронь за текущую дату
@@ -44,6 +45,7 @@ class RoomBooking(mixins.AuthenticationMixin, APIView):
 class BookingReportRetieve(mixins.AuthenticationMixin, APIView):
     """ Получение отчета по конкретной комнате """
 
+    @swagger_auto_schema(manual_parameters=ROOM_MANUAL_PARAMETERS)
     def get(self, request, room_name):
         room = get_object_or_404(models.Room, name=room_name)
         start_date, end_date = utils.get_filter_params(request)
@@ -71,6 +73,7 @@ class BookingReportRetieve(mixins.AuthenticationMixin, APIView):
 class BookingReportList(mixins.AuthenticationMixin, APIView):
     """ Получение отчета по всем комнатам """
 
+    @swagger_auto_schema(manual_parameters=ROOM_MANUAL_PARAMETERS)
     def get(self, request):
         start_date, end_date = utils.get_filter_params(request)
         rooms = models.Room.objects.all().prefetch_related(
