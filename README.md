@@ -14,12 +14,12 @@ cp .env.example .env
 python manage.py migrate
 ```
 ###
-####наполнение базы комнатами
+#### наполнение базы комнатами
 ```shell
 python manage.py loaddata rooms.json
 ```
 
-####Сваггер доступен на
+#### Сваггер доступен на
 ```shell
 http://localhost:8000/swagger/
 ```
