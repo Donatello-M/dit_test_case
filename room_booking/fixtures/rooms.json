@@ -1,0 +1,23 @@
+[
+  {
+    "model": "room_booking.room",
+    "pk": 1,
+    "fields": {
+      "name": "k906"
+    }
+  },
+  {
+    "model": "room_booking.room",
+    "pk": 2,
+    "fields": {
+      "name": "k908"
+    }
+  },
+  {
+    "model": "room_booking.room",
+    "pk": 3,
+    "fields": {
+      "name": "k907"
+    }
+  }
+]
