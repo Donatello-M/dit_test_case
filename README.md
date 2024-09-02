@@ -9,6 +9,18 @@ pytest -vv
 ```shell
 cp .env.example .env
 ```
+### Установка зависимостей
+```shell
+python -m venv venv
+```
+
+```shell
+source venv/bin/activate
+```
+
+```shell
+pip install -r requirements.txt
+```
 
 ```shell
 python manage.py migrate
