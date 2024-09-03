@@ -1,5 +1,4 @@
 import datetime as dt
-from typing import Optional
 
 import pytz
 from django.db.models import Q
@@ -17,18 +16,12 @@ class CreateReserveSerializer(serializers.ModelSerializer):
         model = models.Reserve
         fields = ('id', 'room', 'start_time', 'end_time', 'description')
 
-    def validate_room(self, room: str) -> Optional[models.Room]:
-        """ Проверка наличия комнаты """
-        if room:
-            return utils.get_object_by_name(room, key='Room')
-
-        return None
-
     def validate(self, data):
         """ Валидация по времени бронирования """
         start_time = data['start_time']
         end_time = data['end_time']
         room = utils.get_object_by_name(data['room'], key='Room')
+        data['room'] = room
         if end_time < start_time:
             raise ValidationError('end_time must be bigger than start_time')
         if start_time < dt.datetime.now(tz=pytz.UTC):
